@@ -1,9 +1,11 @@
-let Splash = function() {};
+var Splash = function() {};
 Splash.prototype.loadScripts = function() {
 	game.load.script('webfont_script', 'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.26/webfontloader.js');
 	game.load.script('mainmenu_script', 'js/mainmenu.js');
 	game.load.script('game_script', 'js/game.js');
 	game.load.script('level_script', 'js/level.js');
+	game.load.script('player_script', 'js/player.js');
+	game.load.script('tile_script', 'js/tile.js');
 	game.load.script('style_script', 'js/style.js');
 };
 Splash.prototype.loadBgm = function() {
@@ -16,12 +18,12 @@ Splash.prototype.loadFonts = function() {		// Add the font using the WebFont scr
 			families: ['DK Drop Dead Gorgeous'],
 			urls: ['css/dk_drop_dead_gorgeous.css']
 		}
-	}
+	};
 };
 Splash.prototype.addGameStates = function() {
 	game.state.add('MainMenu', MainMenu); 		// Gets the MainMenu object from mainmenu_script.
 	game.state.add('Game', Game);
-	game.state.add('Level', Level);
+	// game.state.add('Level', Level);
 };
 Splash.prototype.addGameMusic = function() {
 	music = game.add.audio('bgMusic');
@@ -55,7 +57,7 @@ Splash.prototype.create = function() {
 	this.status.setText('Ready!'); 	// Change the text when everything has been loaded.
 	this.addGameStates();
 	this.addGameMusic();
-	setTimeout(function() {			// Show the Splash scene for at least 5 seconds.
+	setTimeout(function() {			// Show the Splash scene for at least 2 seconds.
 		game.state.start('MainMenu');
 	}, 2000);
 };

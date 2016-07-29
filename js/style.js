@@ -1,8 +1,8 @@
-let style;
+var style;
 
 (function() {
-	let defaultColor = 'white';
-	let highlightColor = '#FEFFD5';
+	var defaultColor = 'white';
+	var highlightColor = '#FEFFD5';
 
 	style = {
 	

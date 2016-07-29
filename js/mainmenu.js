@@ -1,6 +1,6 @@
-let MainMenu = function() {};
+var MainMenu = function() {};
 MainMenu.prototype.addMenuOption = function(text, callback) {
-	let txt = game.add.text(game.world.centerX, (this.optionCount*50) + 300, text, style.navitem.default);
+	var txt = game.add.text(game.world.centerX, (this.optionCount*50) + 300, text, style.navitem.default);
 	txt.anchor.setTo(0.5, 0);
 	txt.inputEnabled = true;
 	txt.events.onInputUp.add(callback);
@@ -30,8 +30,7 @@ MainMenu.prototype.preload = function() {
 	game.add.existing(this.mz);		// The zombie.
 
 	this.addMenuOption('Start', function() {
-		console.log('You clicked Start');
-		game.state.start('Level');
+		game.state.start('Game');
 	});
 	this.addMenuOption('Credits', function() {
 		console.log('You clicked Credits');
@@ -42,6 +41,4 @@ MainMenu.prototype.preload = function() {
 };
 MainMenu.prototype.create = function() {
 	game.add.existing(this.titleText);
-
-	game.stage.disableVisibilityChange = false; // Make it so the game does not pause on unfocus.
 };

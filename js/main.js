@@ -1,9 +1,20 @@
-let game = new Phaser.Game(995, 600, Phaser.AUTO, '');
+var w = 32*(Math.floor(($(window).width())/32));
+var h = 32*(Math.floor(($(window).height())/32));
+
+console.log(w + ' ' + h);
+
+var game = new Phaser.Game(w, h, Phaser.AUTO, '');
+
+	game.columns = Math.floor((w-64)/32);
+	game.rows = Math.floor((h-64)/32);
+
+	game.player;
+	game.level;
 
 // Create the Main state to be used in the game.
 // Preload the assets used int the Splash state.
 // Create the Splash state and start it.
-let Main = function() {};
+var Main = function() {};
 Main.prototype.init = function() {
 	game.scale.pageAlignHorizontally = true;
 	game.scale.pageAlignVertically = true;
@@ -18,6 +29,7 @@ Main.prototype.preload = function() {
 Main.prototype.create = function() {
 	game.state.add('Splash', Splash);
 	game.state.start('Splash');
+	game.stage.disableVisibilityChange = true;
 };
 
 // Add the Main state to the game and start it.
