@@ -10,6 +10,7 @@ var game = new Phaser.Game(w, h, Phaser.AUTO, '');
 
 	game.player;
 	game.level;
+	game.levelNumber = 1;
 
 // Create the Main state to be used in the game.
 // Preload the assets used int the Splash state.
