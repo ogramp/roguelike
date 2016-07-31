@@ -1,13 +1,10 @@
-var Game = function() {
-	game.level;
-	game.player;
-};
+var Game = function() {};
 Game.prototype.preload = function() {
-	game.levelNumber++;
+	game.roguelike.levelNumber += 1;
 };
 Game.prototype.create = function() {
-	game.level = new Level(game.levelNumber-1, 2, 2);
-	game.player = game.add.existing(new Player(1, game.rows));
+	game.roguelike.level = new Level(game.roguelike.levelNumber, 2, 2);
+	game.roguelike.player = game.add.existing(new Player(1, game.roguelike.rows));
 
 	var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	spaceKey.onDown.add(this.startNewLevel, this);

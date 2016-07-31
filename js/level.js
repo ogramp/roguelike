@@ -1,7 +1,8 @@
 var Level = function(levelNumber, numberOfInerWalls, numberOfItems) {
+	'user strict!';
 	this.gridPositions = [];
 	this.allGridPositions = [];
-	this.exit;
+	this.exit = null;
 	this.enemyCount = Math.ceil(Math.log(levelNumber, 2));
 
 	this.boardSetup();
@@ -12,17 +13,17 @@ var Level = function(levelNumber, numberOfInerWalls, numberOfItems) {
 };
 Level.prototype.initializeList = function() {
 	this.gridPositions = [];
-	for(var x = 1; x < game.columns-1; x++) {
-		for(var y = 1; y < game.rows-1; y++) {
+	for(var x = 1; x < game.roguelike.columns-1; x++) {
+		for(var y = 1; y < game.roguelike.rows-1; y++) {
 			this.gridPositions.push([x, y]);
 		}
 	}
 };
 Level.prototype.boardSetup = function() {
-	for(var x = -1; x < game.columns+1; x++) {
-		for(var y = -1; y < game.rows+1; y++) {
+	for(var x = -1; x < game.roguelike.columns+1; x++) {
+		for(var y = -1; y < game.roguelike.rows+1; y++) {
 			var t;
-			if(x === -1 || x === game.columns || y === -1 || y === game.rows) {
+			if(x === -1 || x === game.roguelike.columns || y === -1 || y === game.roguelike.rows) {
 				t = new Tile(game, x+1, y+1, 'outerWallTile', false);
 			} else {
 				t = new Tile(game, x+1, y+1, 'floorTile', true);
@@ -31,7 +32,7 @@ Level.prototype.boardSetup = function() {
 			this.allGridPositions.push(t);
 		}
 	}
-	this.exit = new Tile(game, game.columns, 1, 'exitTile', true);
+	this.exit = new Tile(game, game.roguelike.columns, 1, 'exitTile', true);
 	game.add.existing(this.exit);
 };
 Level.prototype.randomPosition = function() {

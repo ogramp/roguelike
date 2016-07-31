@@ -1,5 +1,6 @@
 var Player = function(x, y) {
-	this.currentTile = game.level.getTileByCoord(x, y);
+	console.log('created a player character');
+	this.currentTile = game.roguelike.level.getTileByCoord(x, y);
 
 	Phaser.Sprite.call(this, game, this.currentTile.x, this.currentTile.y, 'scavenger_ss', 0);
 
@@ -11,7 +12,6 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.setUpKeys = function() {
-
 	var upKey 	 = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 	var downKey  = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 	var leftKey  = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -30,7 +30,7 @@ Player.prototype.setUpKeys = function() {
 			[sKey, 	   {x:  0, y:  1}], 
 			[aKey, 	   {x: -1, y:  0}], 
 			[dKey, 	   {x:  1, y:  0}]
-		]; 
+		];
 
 	keys.forEach(function(item) {
 		item[0].onDown.add(function() {
@@ -41,15 +41,15 @@ Player.prototype.setUpKeys = function() {
 
 Player.prototype.attemptMove = function(dir) {
 	var targetDirOk = true;
-	var targetTile = game.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+	var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
 
-	if(targetTile.tileItem === 'food') {
-		console.log('yum');
+	if(targetTile.tileItem === 'itemTile') {
+		game.roguelike.score += 1;
 	} else if(targetTile.tileItem === 'innerWallTile') {
 		targetDirOk = false;
 	}
 
-	if(targetTile.tilePosition.x === 0 || targetTile.tilePosition.y === 0 || targetTile.tilePosition.x === game.columns+1 || targetTile.tilePosition.y === game.rows+1) {
+	if(targetTile.tilePosition.x === 0 || targetTile.tilePosition.y === 0 || targetTile.tilePosition.x === game.roguelike.columns+1 || targetTile.tilePosition.y === game.rows+1) {
 		targetDirOk = false; // The target tile is outerwall.
 	}
 
