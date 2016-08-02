@@ -4,6 +4,12 @@ var Player = function(x, y) {
 
 	Phaser.Sprite.call(this, game, this.currentTile.x, this.currentTile.y, 'scavenger_ss', 0);
 
+	// Player sprite animations.
+	var idle = this.animations.add('idle', [0, 1, 2, 3, 4, 5], 5, true);
+	var dig = this.animations.add('dig', [40, 41], 10, false);
+	var getHit = this.animations.add('getHit', [46, 47], 10, false);
+	this.animations.play('idle');
+
 	this.canMove = true;
 
 	this.setUpKeys();
@@ -26,7 +32,7 @@ Player.prototype.setUpKeys = function() {
 			[downKey,  {x:  0, y:  1}], 
 			[leftKey,  {x: -1, y:  0}], 
 			[rightKey, {x:  1, y:  0}], 
-			[wKey, 	   {x:  0, y: -1}], 
+			[wKey, 	   {x:  0, y: -1}],
 			[sKey, 	   {x:  0, y:  1}], 
 			[aKey, 	   {x: -1, y:  0}], 
 			[dKey, 	   {x:  1, y:  0}]
@@ -35,6 +41,20 @@ Player.prototype.setUpKeys = function() {
 	keys.forEach(function(item) {
 		item[0].onDown.add(function() {
 			this.attemptMove(item[1]);
+		}, this);
+	}, this);
+
+	// Dig and getHit animations keys for testing.
+	var digKey = game.input.keyboard.addKey(Phaser.Keyboard.G);
+	digKey.onDown.add(function() {
+		this.animations.play('dig').onComplete.add(function() {
+			this.animations.play('idle');
+		}, this);
+	}, this);
+	var digKey = game.input.keyboard.addKey(Phaser.Keyboard.H);
+	digKey.onDown.add(function() {
+		this.animations.play('getHit').onComplete.add(function() {
+			this.animations.play('idle');
 		}, this);
 	}, this);
 };
