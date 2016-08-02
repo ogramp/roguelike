@@ -75,8 +75,8 @@ Player.prototype.attemptMove = function(dir) {
 	} else if(targetTile.tileName === 'outerWallTile') {
 		console.log('outerWall');
 		targetDirOk = false;
-	} else if(targetTile.tileName === 'exitTile') {
-		console.log('exitTile');
+	} else if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'exitTile') {
+		game.state.states.Game.startNewLevel();
 	}
 
 	if(this.canMove && targetDirOk) {

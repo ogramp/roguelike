@@ -35,6 +35,10 @@ Level.prototype.boardSetup = function() {
 		}
 	}
 	this.exit = new Tile(game, game.roguelike.columns, 1, 'exitTile', true);
+
+	var exitHoldTile = this.getTileByCoord(game.roguelike.columns, 1);
+		exitHoldTile.tileItem = this.exit;
+
 	game.add.existing(this.exit);
 };
 Level.prototype.randomPosition = function() {
