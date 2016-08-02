@@ -38,6 +38,9 @@ MainMenu.prototype.preload = function() {
 	this.addMenuOption('Register', function() {
 		console.log('You clicked Register');
 	});
+	this.addMenuOption('Options', function() {
+		console.log('You clicked Options');
+	});
 };
 MainMenu.prototype.create = function() {
 	game.add.existing(this.titleText);
