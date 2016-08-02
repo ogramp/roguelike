@@ -65,12 +65,18 @@ Player.prototype.attemptMove = function(dir) {
 
 	console.log(targetTile);
 
-	if(targetTile.tileItem === 'itemTile') {
+	if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'itemTile') {
+		console.log('food');
 		game.roguelike.score += 1;
-	} else if(targetTile.tileItem === 'innerWallTile') {
-		targetDirOk = false; // Here I should make it possible to kill wall
+	} else if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
+		// targetDirOk = false; // Here I should make it possible to kill wall
+		console.log('innerWall');
+		targetDirOk = this.digWall(targetTile);
 	} else if(targetTile.tileName === 'outerWallTile') {
+		console.log('outerWall');
 		targetDirOk = false;
+	} else if(targetTile.tileName === 'exitTile') {
+		console.log('exitTile');
 	}
 
 	if(this.canMove && targetDirOk) {
@@ -80,4 +86,24 @@ Player.prototype.attemptMove = function(dir) {
 			this.currentTile = targetTile;
 		}, this);
 	}
+};
+
+Player.prototype.digWall = function(targetTile) {	
+
+	var t = targetTile.tileItem;
+
+	this.animations.play('dig').onComplete.add(function() {
+		this.animations.play('idle');
+	}, this);
+
+	targetTile.tileHP -= 3;
+
+	if(targetTile.tileHP === null || targetTile.tileHP < 1) {
+		targetTile.tileItem = null;
+		t.destroy();
+		return true;
+	} else {
+		return false;
+	}
+
 };

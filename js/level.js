@@ -5,6 +5,8 @@ var Level = function(levelNumber, numberOfInerWalls, numberOfItems) {
 	this.exit = null;
 	this.enemyCount = Math.ceil(Math.log(levelNumber, 2));
 
+	this.innerWallTiles = [];
+
 	this.boardSetup();
 	this.initializeList();
 	this.layoutItemsAtRandom('innerWallTile', numberOfInerWalls*0.5, numberOfInerWalls);
@@ -46,10 +48,14 @@ Level.prototype.layoutItemsAtRandom = function(tileType, min, max) {
 	for(var i = 0; i < objectCount; i++) {
 		var rPos = this.randomPosition();
 		var t = new Tile(game, rPos[0]+1, rPos[1]+1, tileType);
+		this.innerWallTiles.push(t);
 		game.add.existing(t);
 		var index = this.getTileByCoord(rPos[0]+1, rPos[1]+1);
-		index.tileItem = tileType;
-	}
+		index.tileItem = t;
+		if(tileType === 'innerWallTile') {
+			index.tileHP = 10;
+		} 
+	} 
 };
 Level.prototype.getTileByCoord = function(x, y) {
 	var returnVar = null;

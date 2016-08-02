@@ -13,7 +13,11 @@ var Tile = function(game, x, y, tileType) {
 	} else if(tileType === 'exitTile') {
 		Phaser.Sprite.call(this, game, x*32, y*32, 'scavenger_ss', 20); // 20 is the exit tile on the spritesheet.
 	}
-	this.tileName = tileType;
+	if(tileType === 'exitTile') {
+		this.tileName = 'exitTile';
+	} else {
+		this.tileName = tileType;
+	}
 	this.tilePosition = {x: x, y: y};
 	this.tileItem = null;
 };
