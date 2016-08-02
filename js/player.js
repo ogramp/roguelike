@@ -43,14 +43,14 @@ Player.prototype.attemptMove = function(dir) {
 	var targetDirOk = true;
 	var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
 
+	console.log(targetTile);
+
 	if(targetTile.tileItem === 'itemTile') {
 		game.roguelike.score += 1;
 	} else if(targetTile.tileItem === 'innerWallTile') {
+		targetDirOk = false; // Here I should make it possible to kill wall
+	} else if(targetTile.tileName === 'outerWallTile') {
 		targetDirOk = false;
-	}
-
-	if(targetTile.tilePosition.x === 0 || targetTile.tilePosition.y === 0 || targetTile.tilePosition.x === game.roguelike.columns+1 || targetTile.tilePosition.y === game.rows+1) {
-		targetDirOk = false; // The target tile is outerwall.
 	}
 
 	if(this.canMove && targetDirOk) {
