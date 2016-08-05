@@ -44,4 +44,9 @@ MainMenu.prototype.preload = function() {
 };
 MainMenu.prototype.create = function() {
 	game.add.existing(this.titleText);
-};
+	var returnKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+	returnKey.onDown.add(function() {
+		console.log('Enter Kay')
+		game.state.start('Game');
+	}, this);
+}; 

@@ -15,8 +15,8 @@ Preload.prototype.loadImages = function() {};
 Preload.prototype.loadFonts = function() {		// Add the font using the WebFont script.
 	WebFontConfig = {
 		custom: {
-			families: ['DK Drop Dead Gorgeous'],
-			urls: ['css/dk_drop_dead_gorgeous.css']
+			families: ['Slackey'],
+			urls: ['css/Slackey.css']
 		}
 	};
 };

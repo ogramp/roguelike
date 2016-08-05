@@ -7,13 +7,13 @@ var style;
 	style = {
 	
 		header: {
-			font: 'bold 40pt DK Drop Dead Gorgeous',
+			font: 'bold 40pt Slackey',
 			fill: defaultColor,
 			align: 'center'
 		},
 		navitem: {
 			base: {
-				font: '30pt DK Drop Dead Gorgeous',
+				font: '30pt Slackey',
 				align: 'center',
 				strokeThickness: 4
 			},
@@ -32,4 +32,3 @@ var style;
 	Object.assign(style.navitem.hover, style.navitem.base);
 	Object.assign(style.navitem.default, style.navitem.base);
 })();
-
