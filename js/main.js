@@ -26,8 +26,6 @@ var game = new Phaser.Game(w, h, Phaser.AUTO, '');
 // Create the Preload state and start it.
 var Main = function() {};
 Main.prototype.init = function() {
-
-	console.log(game.roguelike.maxNrOfInnerWalls);
 	// Center the game horizontally and vertically.
 	// (the game is not always full width and height of window)
 	game.scale.pageAlignHorizontally = true;
@@ -36,7 +34,8 @@ Main.prototype.init = function() {
 	game.stage.disableVisibilityChange = true;
 };
 Main.prototype.preload = function() {
-	game.load.image('menu_bg',				'img/menu_bg.jpg');
+	game.load.image('menu_bg_old',				'img/menu_bg.jpg');
+	game.load.image('menu_bg',				'img/menu_bg2.jpg');
 	game.load.image('menu_progress_bar', 	'img/menu_progress_bar.png');
 	game.load.spritesheet('scavenger_ss', 	'img/scavengers_ss.png', 32, 32);
 	game.load.script('utils_script',		'js/utils.js');
