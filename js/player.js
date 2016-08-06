@@ -2,7 +2,10 @@ var Player = function(x, y) {
 	console.log('created a player character');
 	this.currentTile = game.roguelike.level.getTileByCoord(x, y);
 
-	Phaser.Sprite.call(this, game, this.currentTile.x, this.currentTile.y, 'scavenger_ss', 0);
+	Phaser.Sprite.call(this, game, this.currentTile.x+16, this.currentTile.y, 'scavenger_ss', 0);
+
+	// Set the horizontal achor to center for sprite direction fliping.
+	this.anchor.setTo(0.5, 0);
 
 	// Player sprite animations.
 	var idle = this.animations.add('idle', [0, 1, 2, 3, 4, 5], 5, true);
@@ -51,8 +54,8 @@ Player.prototype.setUpKeys = function() {
 			this.animations.play('idle');
 		}, this);
 	}, this);
-	var digKey = game.input.keyboard.addKey(Phaser.Keyboard.H);
-	digKey.onDown.add(function() {
+	var hitKey = game.input.keyboard.addKey(Phaser.Keyboard.H);
+	hitKey.onDown.add(function() {
 		this.animations.play('getHit').onComplete.add(function() {
 			this.animations.play('idle');
 		}, this);
@@ -63,7 +66,11 @@ Player.prototype.attemptMove = function(dir) {
 	var targetDirOk = true;
 	var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
 
-	console.log(targetTile);
+	// console.log(targetTile);
+
+	// Face the sprite in the correct direction.
+	if(dir.x !== 0)
+		this.scale.x = dir.x;
 
 	if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'itemTile') {
 		console.log('food');
@@ -81,7 +88,7 @@ Player.prototype.attemptMove = function(dir) {
 
 	if(this.canMove && targetDirOk) {
 		this.canMove = false;
-		game.add.tween(this).to({x: this.x+(dir.x*32), y: this.y+(dir.y*32)}, 150, 'Quart.easeInOut', true).onComplete.add(function() {
+		game.add.tween(this).to({x: this.x+(dir.x*16)*2, y: this.y+(dir.y*32)}, 150, 'Quart.easeInOut', true).onComplete.add(function() {
 			this.canMove = true;
 			this.currentTile = targetTile;
 		}, this);
