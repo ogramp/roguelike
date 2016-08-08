@@ -34,7 +34,7 @@ Main.prototype.init = function() {
 	game.stage.disableVisibilityChange = true;
 };
 Main.prototype.preload = function() {
-	game.load.image('menu_bg_old',				'img/menu_bg.jpg');
+	game.load.image('menu_bg_old',			'img/menu_bg.jpg');
 	game.load.image('menu_bg',				'img/menu_bg2.jpg');
 	game.load.image('menu_progress_bar', 	'img/menu_progress_bar.png');
 	game.load.spritesheet('scavenger_ss', 	'img/scavengers_ss.png', 32, 32);

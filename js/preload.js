@@ -31,21 +31,15 @@ Preload.prototype.addGameMusic = function() {
 	music.play();
 };
 Preload.prototype.init = function() {
-	this.menuProgressBar = game.make.sprite(game.world.centerX, 400, 'menu_progress_bar');
+	this.menuProgressBar = game.make.sprite(game.world.centerX, game.world.centerY, 'menu_progress_bar');
 	this.menuProgressBar.anchor.setTo(0.5);
-	this.status = game.make.text(game.world.centerX, 500, 'Loading...', {fill: 'white'});
-	// this.menuZomhbie = game.make.sprite(200, 450, 'scavenger_ss');
-	// this.menuZomhbie.scale.y = 3;
-	// this.menuZomhbie.scale.x = -3;
-	// this.menuZomhbie.animations.add('idle', [7, 8, 9, 10, 11]);
-	// this.menuZomhbie.animations.play('idle', 6, true);
-	// utils.centerGameObjects([this.menuProgressBar, this.status, this.menuZomhbie]);
+	this.status = game.make.text(game.world.centerX, game.world.centerY+50, 'Loading...', {fill: '#9EA2A8', fontSize: 16});
+	this.status.anchor.setTo(0.5);
 };
 Preload.prototype.preload = function() {
 	game.add.sprite(game.world.centerX, game.world.centerY, 'menu_bg').anchor.setTo(0.5);	// Background image.
 	game.add.existing(this.menuProgressBar);	// Progress loading bar.
 	game.add.existing(this.status);				// The 'Loading...' text.
-	// game.add.existing(this.menuZomhbie);		// The zombie.
 
 	this.load.setPreloadSprite(this.menuProgressBar); // Set the progressbar.
 
