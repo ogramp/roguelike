@@ -18,11 +18,15 @@ var style;
 				strokeThickness: 2
 			},
 			default: {
+				font: '16pt Slackey',
 				fill: defaultColor,
+				strokeThickness: 2,
 				stroke: 'rgba(0, 0, 0, 0)'
 			},
 			hover: {
+				font: '16pt Slackey',
 				fill: highlightColor,
+				strokeThickness: 2,
 				stroke: 'rgba(100, 100, 100, 0.5)'
 			}
 		}

@@ -10,13 +10,16 @@ MainMenu.prototype.addMenuOption = function(text, callback) {
 	txt.events.onInputOut.add(function(target) {
 		target.setStyle(style.navitem.default);
 	});
+	txt.alpha = 0;
 	this.optionCount++;
+	game.add.tween(txt).to({alpha: 1}, 1000, 'Linear', true, this.optionCount*300);
 };
 MainMenu.prototype.init = function() {
 	this.optionCount = 1;
 	this.titleText = game.make.text(game.world.centerX, game.world.centerY-(game.world.height*0.25), '2D SCAVENGER GAME', style.header);
 	this.titleText.setShadow(3, 3, 'rgba(0, 0, 0, 0.5)', 5);
 	this.titleText.anchor.setTo(0.5);
+	this.titleText.alpha = 0;
 };
 MainMenu.prototype.preload = function() {
 	game.add.sprite(game.world.centerX, game.world.centerY, 'menu_bg').anchor.setTo(0.5);
@@ -41,4 +44,7 @@ MainMenu.prototype.create = function() {
 		console.log('Enter Kay')
 		game.state.start('Game');
 	}, this);
+
+
+	game.add.tween(this.titleText).to({alpha: 1}, 1000, 'Linear', true, 50);
 }; 
