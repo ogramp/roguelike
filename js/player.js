@@ -91,6 +91,7 @@ Player.prototype.attemptMove = function(dir) {
 			this.currentTile = targetTile;
 		}, this);
 	}
+	Game.prototype.moveEnemies();
 };
 
 Player.prototype.digWall = function(targetTile) {	
