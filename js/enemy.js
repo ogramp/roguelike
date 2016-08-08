@@ -17,7 +17,7 @@ var Enemy = function(x, y) {
 	// Enemy animations.
 	var idle = this.animations.add('idle', z, 5, true);
 
-	// Start the idle animation.
+	// Start the idle animation. Yes.
 	this.animations.play('idle');
 };
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
