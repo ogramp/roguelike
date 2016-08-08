@@ -31,14 +31,15 @@ Preload.prototype.addGameMusic = function() {
 	music.play();
 };
 Preload.prototype.init = function() {
-	this.menuProgressBar = game.make.sprite(game.world.centerX, game.world.centerY, 'menu_progress_bar');
-	this.menuProgressBar.anchor.setTo(0.5);
+	this.menuProgressBar = game.make.sprite(game.world.centerX-0.5*game.cache.getImage('menu_progress_bar').width, game.world.centerY, 'menu_progress_bar');
+	this.menuProgressBar.anchor.setTo(0, 0.5);
 	this.status = game.make.text(game.world.centerX, game.world.centerY+50, 'Loading...', {fill: '#9EA2A8', fontSize: 16});
 	this.status.anchor.setTo(0.5);
 };
 Preload.prototype.preload = function() {
 	game.add.sprite(game.world.centerX, game.world.centerY, 'menu_bg').anchor.setTo(0.5);	// Background image.
 	game.add.existing(this.menuProgressBar);	// Progress loading bar.
+	game.add.sprite(game.world.centerX, game.world.centerY, 'menu_progress_bar_bg').anchor.setTo(0.5);
 	game.add.existing(this.status);				// The 'Loading...' text.
 
 	this.load.setPreloadSprite(this.menuProgressBar); // Set the progressbar.
@@ -54,5 +55,5 @@ Preload.prototype.create = function() {
 	this.addGameMusic();
 	setTimeout(function() {			// Show the Preload scene for at least 2 seconds.
 		game.state.start('MainMenu');
-	}, 2000);
+	}, 1500);
 };
