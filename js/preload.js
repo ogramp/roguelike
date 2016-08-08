@@ -1,12 +1,13 @@
 var Preload = function() {};
 Preload.prototype.loadScripts = function() {
-	game.load.script('webfont_script', 'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.26/webfontloader.js');
+	game.load.script('webfont_script', 	'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.26/webfontloader.js');
 	game.load.script('mainmenu_script', 'js/mainmenu.js');
-	game.load.script('game_script', 'js/game.js');
-	game.load.script('level_script', 'js/level.js');
-	game.load.script('player_script', 'js/player.js');
-	game.load.script('tile_script', 'js/tile.js');
-	game.load.script('style_script', 'js/style.js');
+	game.load.script('game_script', 	'js/game.js');
+	game.load.script('level_script', 	'js/level.js');
+	game.load.script('player_script', 	'js/player.js');
+	game.load.script('enemy_script', 	'js/enemy.js');
+	game.load.script('tile_script', 	'js/tile.js');
+	game.load.script('style_script', 	'js/style.js');
 };
 Preload.prototype.loadBgm = function() {
 	game.load.audio('bgMusic', 'sfx/Despair and Triumph.mp3');
@@ -23,7 +24,6 @@ Preload.prototype.loadFonts = function() {		// Add the font using the WebFont sc
 Preload.prototype.addGameStates = function() {
 	game.state.add('MainMenu', MainMenu); 		// Gets the MainMenu object from mainmenu_script.
 	game.state.add('Game', Game);
-	// game.state.add('Level', Level);
 };
 Preload.prototype.addGameMusic = function() {
 	music = game.add.audio('bgMusic');

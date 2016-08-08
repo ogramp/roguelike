@@ -66,8 +66,6 @@ Player.prototype.attemptMove = function(dir) {
 	var targetDirOk = true;
 	var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
 
-	// console.log(targetTile);
-
 	// Face the sprite in the correct direction.
 	if(dir.x !== 0)
 		this.scale.x = dir.x;

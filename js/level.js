@@ -11,7 +11,6 @@ var Level = function(levelNumber, numberOfInerWalls, numberOfItems) {
 	this.initializeList();
 	this.layoutItemsAtRandom('innerWallTile', numberOfInerWalls*0.5, numberOfInerWalls);
 	this.layoutItemsAtRandom('itemTile', 1, numberOfItems);
-	this.layoutItemsAtRandom('enemyTile', this.enemyCount, this.enemyCount);
 };
 Level.prototype.initializeList = function() {
 	this.gridPositions = [];

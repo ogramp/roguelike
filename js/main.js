@@ -11,7 +11,7 @@ var game = new Phaser.Game(w, h, Phaser.AUTO, '');
 			maxNrOfInnerWalls: Math.ceil(((Math.floor((w-64)/32)-2)*(Math.floor((h-64)/32)-2))/3),
 			player: null, 
 			level: null,
-			levelNumber: 0,
+			levelNumber: 10,
 			score: 0,
 
 			ss_outerWallTiles: [25, 26, 28, 29, 31], // Outerwall tile frame numbers on the spritesheet.
