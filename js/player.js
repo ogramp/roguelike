@@ -77,9 +77,11 @@ Player.prototype.attemptMove = function(dir) {
 		// targetDirOk = false; // Here I should make it possible to kill wall
 		console.log('innerWall');
 		targetDirOk = this.digWall(targetTile);
+		Game.prototype.moveEnemies();
 	} else if(targetTile.tileName === 'outerWallTile') {
 		console.log('outerWall');
 		targetDirOk = false;
+		Game.prototype.moveEnemies();
 	} else if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'exitTile') {
 		game.state.states.Game.startNewLevel();
 	}
@@ -89,9 +91,9 @@ Player.prototype.attemptMove = function(dir) {
 		game.add.tween(this).to({x: this.x+(dir.x*16)*2, y: this.y+(dir.y*32)}, 150, 'Quart.easeInOut', true).onComplete.add(function() {
 			this.canMove = true;
 			this.currentTile = targetTile;
+			Game.prototype.moveEnemies();
 		}, this);
 	}
-	Game.prototype.moveEnemies();
 };
 
 Player.prototype.digWall = function(targetTile) {	

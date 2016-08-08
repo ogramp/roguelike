@@ -1,7 +1,7 @@
 var Enemy = function(x, y) {
 	this.currentTile = game.roguelike.level.getTileByCoord(x, y);
 	this.target = game.roguelike.player;
-	this.skipMove;
+	this.skipMove = game.rnd.integerInRange(0, 1);
 
 	var zFrames = [
 		[6, 7, 8, 9, 10, 11],
@@ -26,17 +26,59 @@ Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.attemptMove = function() {
-	var dir = {x: 0, y: 0}; // Zombie tries to go left always.
-	if(Math.abs(this.target.x - this.x) < Number.EPSILON) { // If the zombie and the player are on the same column
-		dir.y = this.target.y > this.y ? 1 : -1;
-	} else {
+	if(this.skipMove) {
+		this.skipMove = !this.skipMove;
+		return;
+	} 
+	this.skipMove = !this.skipMove;
+
+	var hor = Math.abs(this.target.currentTile.tilePosition.x - this.currentTile.tilePosition.x);
+	var ver = Math.abs(this.target.currentTile.tilePosition.y - this.currentTile.tilePosition.y);
+
+	var dir = {x: 0, y: 0};
+	if(hor > ver) {
+		// Move horizontally
 		dir.x = this.target.x > this.x ? 1 : -1;
+		var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+		if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
+			dir.y = this.target.y > this.y ? 1 : -1;
+			dir.x = 0;
+			var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+			if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
+				dir.x = 0;
+				dir.y = 0;
+			}
+		}
+	} else if(hor < ver) {
+		// Move vertically
+		dir.y = this.target.y > this.y ? 1 : -1;
+		var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+		if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
+			dir.x = this.target.x > this.x ? 1 : -1;
+			dir.y = 0;
+			var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+			if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
+				dir.x = 0;
+				dir.y = 0;
+			}
+		}
 	}
 
-	var targetDirOk = true;
-	var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+	// console.log(hor + ' and ' + ver);
 
-	console.log(targetTile.tilePosition);
+	// var dir = {x: 0, y: 0}; // Zombie tries to go left always.
+	// if(Math.abs(this.target.currentTile.tilePosition.x - this.currentTile.tilePosition.x) < Number.EPSILON) { // If the zombie and the player are on the same column
+	// 	dir.y = this.target.y > this.y ? 1 : -1;
+	// } else {
+	// 	dir.x = this.target.x > this.x ? 1 : -1;
+	// }
+
+	var targetDirOk = true;
+	// var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+
+	// if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
+	// 	targetDirOk = false;
+	// }
 
 	// Face the sprite in the correct direction.
 	if(dir.x !== 0)
