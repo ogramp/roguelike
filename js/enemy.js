@@ -3,10 +3,16 @@ var Enemy = function(x, y) {
 	this.target = game.roguelike.player;
 	this.skipMove = game.rnd.integerInRange(0, 1); // Make the zombie movement a bit more random.
 
-	// Zombie animation framees.
+	// Zombie animation frames.
 	var zFrames = [
-		[6, 7, 8, 9, 10, 11], // Naked zombie idle frames.
-		[12, 13, 14, 15, 16, 17] // Red Coat zombie idle frames.
+		[
+			[6, 7, 8, 9, 10, 11], // Naked zombie idle frames.
+			[42, 43], // Naked zombie attack frames.
+		],
+		[
+			[12, 13, 14, 15, 16, 17], // Red Coat zombie idle frames.
+			[44, 45] // Red Coat zombie attack frames.
+		]
 	];
 
 	var z = zFrames[game.rnd.integerInRange(0, zFrames.length-1)]; // Choose zombie texture randomly.
@@ -18,10 +24,19 @@ var Enemy = function(x, y) {
 	this.anchor.setTo(0.5, 0);
 
 	// Enemy animations.
-	var idle = this.animations.add('idle', z, 5, true);
+	this.animations.add('idle', z[0], game.rnd.integerInRange(4, 6), true);
+	this.animations.add('attack', z[1], 10, false)
 
 	// Start the idle animation. Yes.
 	this.animations.play('idle');
+
+	// Attack animation key for testing.
+	var attackKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+	attackKey.onDown.add(function() {
+		this.animations.play('attack').onComplete.add(function() {
+			this.animations.play('idle');
+		}, this);
+	}, this);
 };
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
@@ -69,5 +84,10 @@ Enemy.prototype.attemptMove = function() {
 Enemy.prototype.move = function(dir, targetTile) {
 	game.add.tween(this).to({x: this.x+(dir.x*32), y: this.y+(dir.y*32)}, 150, 'Quart.easeInOut', true).onComplete.add(function() {
 		this.currentTile = targetTile;
+	}, this);
+};
+Enemy.prototype.attack = function() {
+	this.animations.play('attack').onComplete.add(function() {
+		this.animations.play('idle');
 	}, this);
 };
