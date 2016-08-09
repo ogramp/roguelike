@@ -1,14 +1,15 @@
 var Enemy = function(x, y) {
 	this.currentTile = game.roguelike.level.getTileByCoord(x, y);
 	this.target = game.roguelike.player;
-	this.skipMove = game.rnd.integerInRange(0, 1);
+	this.skipMove = game.rnd.integerInRange(0, 1); // Make the zombie movement a bit more random.
 
+	// Zombie animation framees.
 	var zFrames = [
-		[6, 7, 8, 9, 10, 11],
-		[12, 13, 14, 15, 16, 17]
+		[6, 7, 8, 9, 10, 11], // Naked zombie idle frames.
+		[12, 13, 14, 15, 16, 17] // Red Coat zombie idle frames.
 	];
 
-	var z = zFrames[game.rnd.integerInRange(0, zFrames.length-1)];
+	var z = zFrames[game.rnd.integerInRange(0, zFrames.length-1)]; // Choose zombie texture randomly.
 
 	// Extend the Phase Sprite.
 	Phaser.Sprite.call(this, game, this.currentTile.x+16, this.currentTile.y, 'scavenger_ss', z[0]);
@@ -26,67 +27,47 @@ Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.attemptMove = function() {
+	// The enemy moves once every two times the player moves. Check if the enemy is supposed
+	// to skip move this turn.
 	if(this.skipMove) {
 		this.skipMove = !this.skipMove;
 		return;
-	} 
-	this.skipMove = !this.skipMove;
+	} else {
+		this.skipMove = !this.skipMove;
+	}
 
+	// Find out the direction the enemy wants to move to.
+	// For that we create the default dir variable.
+	var dir = {x: 0, y: 0};
+	var targetDirOk = true; // Set the flag that we can move to true.
+
+	// Calculate how many tiles away the enemy is from the player horizontally and vertically.
 	var hor = Math.abs(this.target.currentTile.tilePosition.x - this.currentTile.tilePosition.x);
 	var ver = Math.abs(this.target.currentTile.tilePosition.y - this.currentTile.tilePosition.y);
 
-	var dir = {x: 0, y: 0};
+	// If we are further horizontally, attempt horizntal movement
 	if(hor > ver) {
-		// Move horizontally
+		// Decide the horizontal direction.
 		dir.x = this.target.x > this.x ? 1 : -1;
-		var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
-		if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
-			dir.y = this.target.y > this.y ? 1 : -1;
-			dir.x = 0;
-			var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
-			if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
-				dir.x = 0;
-				dir.y = 0;
-			}
+		// Face the sprite in the correct direction.
+		if(dir.x !== 0) {
+			this.scale.x = -1*dir.x;	
 		}
-	} else if(hor < ver) {
-		// Move vertically
+	} else if(hor < ver) { // Else attempt vertical movement.
+		// Decide the veritical direction.
 		dir.y = this.target.y > this.y ? 1 : -1;
-		var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
-		if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
-			dir.x = this.target.x > this.x ? 1 : -1;
-			dir.y = 0;
-			var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
-			if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
-				dir.x = 0;
-				dir.y = 0;
-			}
-		}
 	}
 
-	// console.log(hor + ' and ' + ver);
+	// Get the tile object in the desired direction.
+	var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
 
-	// var dir = {x: 0, y: 0}; // Zombie tries to go left always.
-	// if(Math.abs(this.target.currentTile.tilePosition.x - this.currentTile.tilePosition.x) < Number.EPSILON) { // If the zombie and the player are on the same column
-	// 	dir.y = this.target.y > this.y ? 1 : -1;
-	// } else {
-	// 	dir.x = this.target.x > this.x ? 1 : -1;
-	// }
-
-	var targetDirOk = true;
-	// var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
-
-	// if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
-	// 	targetDirOk = false;
-	// }
-
-	// Face the sprite in the correct direction.
-	if(dir.x !== 0)
-		this.scale.x = -1*dir.x;
-
-	if(targetDirOk) {
-		game.add.tween(this).to({x: this.x+(dir.x*32), y: this.y+(dir.y*32)}, 150, 'Quart.easeInOut', true).onComplete.add(function() {
-			this.currentTile = targetTile;
-		}, this);
+	// Check the status of the target tile. If it is a innerWall tile, don't move.
+	if(!(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile')) {
+		this.move(dir, targetTile);
 	}
+};
+Enemy.prototype.move = function(dir, targetTile) {
+	game.add.tween(this).to({x: this.x+(dir.x*32), y: this.y+(dir.y*32)}, 150, 'Quart.easeInOut', true).onComplete.add(function() {
+		this.currentTile = targetTile;
+	}, this);
 };
