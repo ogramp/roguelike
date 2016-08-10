@@ -1,45 +1,48 @@
-var Level = function(levelNumber, numberOfInerWalls, numberOfItems) {
-	'user strict!';
-	this.gridPositions = [];
-	this.allGridPositions = [];
-	this.exit = null;
-	this.enemyCount = Math.ceil(Math.log(levelNumber, 2));
+var Level = function() {
 
-	this.innerWallTiles = [];
+	// Every level has:
+	this.columns = Math.floor((game.width)/32); // How many tiles wide will the level be.
+	this.rows = Math.floor((game.height)/32); 	// How many tiles high the level will be.
+	this.exitTile = null;
+	this.allGridPositions = []; // All tile positions in level.
+	this.allowedGridPos = []; 	// Positions where it is allowed to spawn an item.
 
-	this.boardSetup();
-	this.initializeList();
-	this.layoutItemsAtRandom('innerWallTile', numberOfInerWalls*0.5, numberOfInerWalls);
-	this.layoutItemsAtRandom('itemTile', 1, numberOfItems);
+	// Every level needs to:
+	this.setUpGridPositions();
+	this.setUpAllowedGridPositions();
+
 };
-Level.prototype.initializeList = function() {
-	this.gridPositions = [];
-	for(var x = 1; x < game.roguelike.columns-1; x++) {
-		for(var y = 1; y < game.roguelike.rows-1; y++) {
-			this.gridPositions.push([x, y]);
-		}
-	}
-};
-Level.prototype.boardSetup = function() {
-	for(var x = -1; x < game.roguelike.columns+1; x++) {
-		for(var y = -1; y < game.roguelike.rows+1; y++) {
-			var t;
-			if(x === -1 || x === game.roguelike.columns || y === -1 || y === game.roguelike.rows) {
-				t = new Tile(game, x+1, y+1, 'outerWallTile', false);
+
+Level.prototype.setUpGridPositions = function() {
+	for(var x = 0; x < this.columns; x++) {
+		for(var y = 0; y < this.rows; y++) {
+			var t = null;
+			if(x === 0 || x === this.columns-1 || y === 0 || y === this.rows-1) {
+				t = new Tile(game, x, y, 'outerWallTile');
 			} else {
-				t = new Tile(game, x+1, y+1, 'floorTile', true);
+				t = new Tile(game, x, y, 'floorTile');
 			}
 			game.add.existing(t);
 			this.allGridPositions.push(t);
 		}
 	}
-	this.exit = new Tile(game, game.roguelike.columns, 1, 'exitTile', true);
+	// this.exitTile = new Tile(game, this.columns-1, 1, 'exitTile', true);
 
-	var exitHoldTile = this.getTileByCoord(game.roguelike.columns, 1);
-		exitHoldTile.tileItem = this.exit;
+	// var exitHoldTile = this.getTileByCoord(this.columns, 1);
+	// 	exitHoldTile.tileItem = this.exit;
 
-	game.add.existing(this.exit);
+	// game.add.existing(this.exitTile);
 };
+
+Level.prototype.setUpAllowedGridPositions = function() {
+	this.gridPositions = [];
+	for(var x = 1; x < this.columns-1; x++) {
+		for(var y = 1; y < this.rows-1; y++) {
+			this.gridPositions.push([x, y]);
+		}
+	}
+};
+
 Level.prototype.randomPosition = function() {
 	var randomIndex = game.rnd.integerInRange(0, this.gridPositions.length-1);
 	var randomPos = this.gridPositions[randomIndex];

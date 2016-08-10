@@ -2,25 +2,25 @@
 var w = 32*(Math.floor(($(window).width())/32)); // Game width from window width.
 var h = 32*(Math.floor(($(window).height())/32)); // Game height from window height.
 
-// The main game object. Should be the only global object.
+// The Phaser game object.
 var game = new Phaser.Game(w, h, Phaser.AUTO, '');
-	game.roguelike = {
-			// Set up game variables.
-			columns: Math.floor((w-64)/32), // How many tiles wide will the game be.
-			rows: Math.floor((h-64)/32), // How many tiles high the game will be.
-			maxNrOfInnerWalls: Math.ceil(((Math.floor((w-64)/32)-2)*(Math.floor((h-64)/32)-2))/3),
-			player: null, 
-			enemies: null,
-			level: null,
-			levelNumber: 0,
-			score: 0,
 
-			ss_outerWallTiles: [25, 26, 28, 29, 31], // Outerwall tile frame numbers on the spritesheet.
-			ss_innerWallTiles: [21, 22, 23, 24, 27, 30, 48, 49, 50, 51, 52, 53], // Breakable wall tile frame numbers on the spritesheet.
-			ss_floorTiles: [32, 33, 34, 35, 36, 37, 38, 39], // Floor tile frame numbers on the spritesheet.
-			ss_itemTiles: [18, 19], // Item tile frame numbers on the spritesheet.
-			ss_enemyTiles: [7, 12]
-		};
+// The main game object.
+var roguelike = {
+	
+	maxNrOfInnerWalls: Math.ceil(((Math.floor((w-64)/32)-2)*(Math.floor((h-64)/32)-2))/3),
+	player: null, 
+	enemies: null,
+	level: null,
+	levelNumber: 0,
+	score: 0,
+
+	ss_outerWallTiles: [25, 26, 28, 29, 31], // Outerwall tile frame numbers on the spritesheet.
+	ss_innerWallTiles: [21, 22, 23, 24, 27, 30, 48, 49, 50, 51, 52, 53], // Breakable wall tile frame numbers on the spritesheet.
+	ss_floorTiles: [32, 33, 34, 35, 36, 37, 38, 39], // Floor tile frame numbers on the spritesheet.
+	ss_itemTiles: [18, 19], // Item tile frame numbers on the spritesheet.
+	ss_enemyTiles: [7, 12]
+};
 
 // Create the Main state to be used in the game.
 // Main the assets used in the Preload state.

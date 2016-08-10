@@ -1,17 +1,30 @@
 var Game = function() {};
 Game.prototype.preload = function() {
-	game.roguelike.levelNumber += 1;
+	// Increment the level number each time we start a level.
+	// TODO: Reset when game is over so that we can start the whole game again.
+	roguelike.levelNumber += 1;
 };
 Game.prototype.create = function() {
-	game.roguelike.level = new Level(game.roguelike.levelNumber, game.roguelike.maxNrOfInnerWalls, 2);
-	game.roguelike.player = game.add.existing(new Player(1, game.roguelike.rows));
-	game.roguelike.enemies = this.createEnemies();
+	// Create the level.
+	roguelike.level = new Level();
 
-	var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	spaceKey.onDown.add(this.startNewLevel, this);
+	// Create the player.
 
-	console.log(Game);
+	// Create the enemies.
+
+	// Create the GUI.
+
+
+
+	// game.roguelike.level = new Level(game.roguelike.levelNumber, game.roguelike.maxNrOfInnerWalls, 2);
+	// game.roguelike.player = game.add.existing(new Player(1, game.roguelike.rows));
+	// game.roguelike.enemies = this.createEnemies();
+
+	// var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	// spaceKey.onDown.add(this.startNewLevel, this);
 };
+
+
 Game.prototype.startNewLevel = function() {
 	game.state.start(game.state.current);
 };
