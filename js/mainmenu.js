@@ -16,7 +16,7 @@ MainMenu.prototype.addMenuOption = function(text, callback) {
 };
 MainMenu.prototype.init = function() {
 	this.optionCount = 1;
-	this.titleText = game.make.text(game.world.centerX, game.world.centerY-(game.world.height*0.25), '2D SCAVENGER GAME', style.header);
+	this.titleText = game.make.text(game.world.centerX, game.world.centerY-(game.world.height*0.25), '2D ROGUELIKE GAME', style.header);
 	this.titleText.setShadow(3, 3, 'rgba(0, 0, 0, 0.5)', 5);
 	this.titleText.anchor.setTo(0.5);
 	this.titleText.alpha = 0;
