@@ -11,6 +11,10 @@ var Level = function() {
 	this.setUpGridPositions();
 	this.setUpAllowedGridPositions();
 
+	// Set up the exit tile.
+	this.exitTile = new Tile(game, this.columns-2, 1, 'exitTile', true);
+	game.add.existing(this.exitTile);
+
 };
 
 Level.prototype.setUpGridPositions = function() {
