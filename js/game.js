@@ -9,6 +9,7 @@ Game.prototype.create = function() {
 	roguelike.level = new Level();
 
 	// Create the player.
+	roguelike.player = new Player(1, 1);
 
 	// Create the enemies.
 
@@ -38,7 +39,10 @@ Game.prototype.createEnemies = function() {
 	return enemies;
 };
 Game.prototype.moveEnemies = function() {
-	game.roguelike.enemies.forEach(function(enemy) {
+	if(roguelike.enemies === null) {
+		return;
+	}
+	roguelike.enemies.forEach(function(enemy) {
 		enemy.attemptMove();
 	});
 };

@@ -1,6 +1,6 @@
 var Player = function(x, y) {
 	console.log('created a player character');
-	this.currentTile = game.roguelike.level.getTileByCoord(x, y);
+	this.currentTile = roguelike.level.getTileByCoord(x, y);
 
 	Phaser.Sprite.call(this, game, this.currentTile.x+16, this.currentTile.y, 'scavenger_ss', 0);
 
@@ -16,6 +16,8 @@ var Player = function(x, y) {
 	this.canMove = true;
 
 	this.setUpKeys();
+
+	game.add.existing(this);
 };
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
@@ -64,7 +66,7 @@ Player.prototype.setUpKeys = function() {
 
 Player.prototype.attemptMove = function(dir) {
 	var targetDirOk = true;
-	var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+	var targetTile = roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
 
 	// Face the sprite in the correct direction.
 	if(dir.x !== 0)
@@ -72,7 +74,7 @@ Player.prototype.attemptMove = function(dir) {
 
 	if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'itemTile') {
 		console.log('food');
-		game.roguelike.score += 1;
+		roguelike.score += 1;
 	} else if(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile') {
 		// targetDirOk = false; // Here I should make it possible to kill wall
 		console.log('innerWall');

@@ -14,6 +14,7 @@ var roguelike = {
 	level: null,
 	levelNumber: 0,
 	score: 0,
+	exit: null,
 
 	ss_outerWallTiles: [25, 26, 28, 29, 31], // Outerwall tile frame numbers on the spritesheet.
 	ss_innerWallTiles: [21, 22, 23, 24, 27, 30, 48, 49, 50, 51, 52, 53], // Breakable wall tile frame numbers on the spritesheet.

@@ -12,8 +12,9 @@ var Level = function() {
 	this.setUpAllowedGridPositions();
 
 	// Set up the exit tile.
-	this.exitTile = new Tile(game, this.columns-2, 1, 'exitTile', true);
+	this.exitTile = new Tile(game, this.columns-2, 1, 'exitTile');
 	game.add.existing(this.exitTile);
+	this.getTileByCoord(this.columns-2, 1).tileItem = this.exitTile;
 
 };
 
