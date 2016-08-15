@@ -12,6 +12,7 @@ Game.prototype.create = function() {
 	roguelike.player = new Player(1, 1);
 
 	// Create the enemies.
+	this.createEnemies();
 
 	// Create the GUI.
 
@@ -30,11 +31,13 @@ Game.prototype.startNewLevel = function() {
 	game.state.start(game.state.current);
 };
 Game.prototype.createEnemies = function() {
+	roguelike.enemies = [];
 	var enemies = game.add.group();
-	for(var i = 0; i < game.roguelike.level.enemyCount; i++) {
-		var tempTilePos = game.roguelike.level.randomPosition();	
+	for(var i = 0; i < 5; i++) {
+		var tempTilePos = roguelike.level.randomPosition();	
 		var tmpEnm = game.add.existing(new Enemy(tempTilePos[0]+1, tempTilePos[1]+1));
 		enemies.add(tmpEnm);
+		roguelike.enemies.push(tmpEnm);
 	}
 	return enemies;
 };

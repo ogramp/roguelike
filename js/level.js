@@ -16,6 +16,9 @@ var Level = function() {
 	game.add.existing(this.exitTile);
 	this.getTileByCoord(this.columns-2, 1).tileItem = this.exitTile;
 
+	// Set up the inner walls.
+	this.layoutItemsAtRandom('innerWallTile', 5, 10);
+
 };
 
 Level.prototype.setUpGridPositions = function() {
@@ -49,7 +52,7 @@ Level.prototype.setUpAllowedGridPositions = function() {
 };
 
 Level.prototype.randomPosition = function() {
-	var randomIndex = game.rnd.integerInRange(0, this.gridPositions.length-1);
+	var randomIndex = game.rnd.integerInRange(1, this.gridPositions.length-1);
 	var randomPos = this.gridPositions[randomIndex];
 	this.gridPositions.splice(randomIndex, 1);
 	return randomPos;
@@ -59,7 +62,7 @@ Level.prototype.layoutItemsAtRandom = function(tileType, min, max) {
 	for(var i = 0; i < objectCount; i++) {
 		var rPos = this.randomPosition();
 		var t = new Tile(game, rPos[0]+1, rPos[1]+1, tileType);
-		this.innerWallTiles.push(t);
+		// this.innerWallTiles.push(t);
 		game.add.existing(t);
 		var index = this.getTileByCoord(rPos[0]+1, rPos[1]+1);
 		index.tileItem = t;

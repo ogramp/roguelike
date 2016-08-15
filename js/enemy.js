@@ -1,6 +1,6 @@
 var Enemy = function(x, y) {
-	this.currentTile = game.roguelike.level.getTileByCoord(x, y);
-	this.target = game.roguelike.player;
+	this.currentTile = roguelike.level.getTileByCoord(x, y);
+	this.target = roguelike.player;
 	this.skipMove = game.rnd.integerInRange(0, 1); // Make the zombie movement a bit more random.
 
 	// Zombie animation frames.
@@ -25,7 +25,7 @@ var Enemy = function(x, y) {
 
 	// Enemy animations.
 	this.animations.add('idle', z[0], game.rnd.integerInRange(4, 6), true);
-	this.animations.add('attack', z[1], 10, false)
+	this.animations.add('attack', z[1], 10, false);
 
 	// Start the idle animation. Yes.
 	this.animations.play('idle');
@@ -74,7 +74,7 @@ Enemy.prototype.attemptMove = function() {
 	}
 
 	// Get the tile object in the desired direction.
-	var targetTile = game.roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
+	var targetTile = roguelike.level.getTileByCoord(this.currentTile.tilePosition.x+dir.x, this.currentTile.tilePosition.y+dir.y);
 
 	// Check the status of the target tile. If it is a innerWall tile, don't move.
 	if(!(targetTile.tileItem !== null && targetTile.tileItem.tileName === 'innerWallTile')) {
