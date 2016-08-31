@@ -1,4 +1,4 @@
-# [ROGUELIKE](http://margo.rlpy.eu/rogulike)
+# [ROGUELIKE](http://margo.rlpy.eu/roguelike)
 My attempt at cloning Unity3D rogulike tutorial on Phaser game engine.
 
 ## THE TODO LIST:
